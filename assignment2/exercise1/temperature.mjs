@@ -1,17 +1,14 @@
 import { WeatherData } from "./weather-data.mjs";
 
 class Temperature extends WeatherData {
-    constructor(type, unit, value) {
-        super(type, unit, value);
+    constructor(time, place, type, unit, value) {
+        super(time, place, type, unit, value);
         Object.freeze(this);
     }
 
-    convertToC = () => new Temperature(this.type, 'C', (this.value * -32) * 9/5);
+    convertToC = () => this.unit != 'C' ? new Temperature(this.time, this.place, this.type, 'C', (this.value * -32) * 9 / 5) : this;
 
-    convertToF = () => new Temperature(this.type, 'F', (this.value * 9/5) + 32);
+    convertToF = () => this.unit != 'F' ? new Temperature(this.time, this.place, this.type, 'F', (this.value * 9 / 5) + 32) : this;
 }
 
-const temp = new Temperature('temperature','C',0);
-console.log(temp.convertToF());
-
-
+export { Temperature }
