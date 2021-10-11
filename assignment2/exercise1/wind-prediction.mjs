@@ -3,7 +3,7 @@ import { WeatherPrediction } from "./weather-data.mjs";
 class WindPrediction extends WeatherPrediction {
     constructor(time, place, type, unit, min, max, expectedDirections) {
         super(time, place, type, unit, min, max);
-        this.directions = expectedDirections;
+        this.expectedDirections = expectedDirections;
         Object.freeze(this);
     }
 

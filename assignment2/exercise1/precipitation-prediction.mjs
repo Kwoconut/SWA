@@ -2,11 +2,12 @@ import { WeatherPrediction } from "./weather-data.mjs";
 
 class PrecipitationPrediction extends WeatherPrediction {
     constructor(time, place, type, unit, min, max, precipitationTypes) {
-        super(time, place, type, unit, min, max, precipitationTypes);
+        super(time, place, type, unit, min, max);
+        this.precipitationTypes = precipitationTypes;
         Object.freeze(this);
     }
 
-    getExpectedTypes = () => this.precipitationType;
+    getExpectedTypes = () => this.precipitationTypes;
 
     matches = data => this.precipitationTypes.contains(data.getPrecipitationType()) && super.matches(data);
 
