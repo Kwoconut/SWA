@@ -1,5 +1,5 @@
-class WeatherHistory {
-    constructor(data) {
+class WeatherForecast {
+    constructor (data) {
         this.data = data;
     }
 
@@ -35,28 +35,31 @@ class WeatherHistory {
         }
     }));
 
-    lowestValue = () => { 
-        if (this.data.length == 0) {
-            return undefined;
-        }
-
+    getAverageMinValue = () => {
         const result = this.data.reduce((acc, entry) => {
-            const type = entry.getType();
-            const value = entry.getValue();
-
-            acc.types[type] = acc.types[type] + 1 || 1;
-
-            if (acc.lowestValue > value) {
-                acc.lowestValue = value;
-            }
+            acc.count = acc.count + 1;
+            acc.accumulatedValue = acc.accumulatedValue + entry.getMin();
+            acc.avg = acc.accumulatedValue / acc.count;
 
             return acc;
-        }, {types: [], lowestValue: Number.MAX_SAFE_INTEGER});
+        },{count: 0,accumulatedValue: 0, avg: 0});
 
-        return Object.keys(result.types).length > 1 ? undefined : result.lowestValue;
+        return result.avg;
     }
 
-    getData = () => {
-        return new WeatherHistory(this.data);
+    getAverageMaxValue = () => {
+        const result = this.data.reduce((acc, entry) => {
+            acc.count = acc.count + 1;
+            acc.accumulatedValue = acc.accumulatedValue + entry.getMax();
+            acc.avg = acc.accumulatedValue / acc.count;
+
+            return acc;
+        },{count: 0,accumulatedValue: 0, avg: 0});
+
+        return result.avg;
+    }
+
+    getPredictions = () => {
+        return new WeatherForecast(this.data);
     }
 }
