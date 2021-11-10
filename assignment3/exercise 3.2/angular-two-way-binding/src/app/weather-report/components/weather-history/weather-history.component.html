@@ -1,0 +1,63 @@
+<div class="row m-0 justify-content-center">
+    <div class="col-11 col-md-10 mt-5">
+        <mat-form-field appearance="fill">
+            <mat-label>Select city</mat-label>
+            <mat-select [(value)]="city">
+                <mat-option value="Aarhus">Aarhus</mat-option>
+                <mat-option value="Copenhagen">Copenhagen</mat-option>
+                <mat-option value="Horsens">Horsens</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <br>
+
+        <button mat-button (click)="fetchMeasurements()">Fetch</button>
+
+        <h2>Weather History</h2>
+
+        <div class="mat-elevation-z8 mb-5">
+            <table mat-table [dataSource]="filteredMeasurements()" matSort>
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let measurement"> {{measurement.type}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="time">
+                    <th mat-header-cell *matHeaderCellDef> Time </th>
+                    <td mat-cell *matCellDef="let measurement"> {{measurement.time | date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="place">
+                    <th mat-header-cell *matHeaderCellDef> Place </th>
+                    <td mat-cell *matCellDef="let measurement"> {{measurement.place}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="value">
+                    <th mat-header-cell *matHeaderCellDef> Value </th>
+                    <td mat-cell *matCellDef="let measurement"> {{measurement.value}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="unit">
+                    <th mat-header-cell *matHeaderCellDef> Unit </th>
+                    <td mat-cell *matCellDef="let measurement"> {{measurement.unit}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

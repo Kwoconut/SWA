@@ -1,0 +1,85 @@
+<div class="row m-0 justify-content-center">
+    <div class="col-11 col-md-10 mt-5">
+        <h2>Report weather</h2>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select type</mat-label>
+            <mat-select [(value)]="measurement.type">
+                <mat-option value="temperature">Temperature</mat-option>
+                <mat-option value="precipitation">Precipitation</mat-option>
+                <mat-option value="wind">Wind</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a time</mat-label>
+            <input matInput [(ngModel)]="measurement.time" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select city</mat-label>
+            <mat-select [(value)]="measurement.place">
+                <mat-option value="Aarhus">Aarhus</mat-option>
+                <mat-option value="Copenhagen">Copenhagen</mat-option>
+                <mat-option value="Horsens">Horsens</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Value</mat-label>
+            <input matInput type="number" [(ngModel)]="measurement.value">
+          </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select Unit</mat-label>
+            <mat-select [(value)]="measurement.unit">
+                <div *ngIf="measurement.type == 'temperature'">
+                    <mat-option value="C">Celsius</mat-option>
+                    <mat-option value="F">Fahrenheit</mat-option>
+                </div>
+                <div *ngIf="measurement.type == 'precipitation'">
+                    <mat-option value="mm">Milimeter</mat-option>
+                    <mat-option value="inch">Inch</mat-option>
+                </div>
+                <div *ngIf="measurement.type == 'wind'">
+                    <mat-option value="mph">Miles per hour</mat-option>
+                    <mat-option value="m/s">Meters per second</mat-option>
+                </div>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="measurement.type == 'precipitation' || measurement.type == 'wind'">
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Additional value</mat-label>
+                <mat-select [(value)]="measurement.additionalValue">
+                    <div *ngIf="measurement.type == 'precipitation'">
+                        <mat-option value="rain">Rain</mat-option>
+                        <mat-option value="breeze">Breeze</mat-option>
+                    </div>
+                    <div *ngIf="measurement.type == 'wind'">
+                        <mat-option value="North">North</mat-option>
+                        <mat-option value="South">South</mat-option>
+                        <mat-option value="West">West</mat-option>
+                        <mat-option value="East">East</mat-option>
+                    </div>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <br>
+        <button mat-button (click)="reportData()">Report Data</button>
+    </div>
+</div>
